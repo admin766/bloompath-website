@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: bloompath-website
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: RECIPIENT_EMAIL
+        value: info@bloompathbehavioral.com
+      - key: FORM_DRY_RUN
+        value: "false"
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURE
+        value: "false"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_FROM
+        value: Bloompath Website <no-reply@bloompathbehavioral.com>

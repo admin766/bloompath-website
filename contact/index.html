@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact Us | Bloompath Behavioral Services</title>
+    <meta
+      name="description"
+      content="Contact Bloompath Behavioral Services for ABA therapy, autism diagnosis, insurance coverage questions, and intake support."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/images/bloompath-logo.png">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header" data-header>
+      <div class="header-inner">
+        <a class="brand" href="../index.html" aria-label="Bloompath Behavioral Services home">
+          <img src="../assets/images/bloompath-logo.png" alt="Bloompath Behavioral Services">
+        </a>
+
+        <button class="menu-button" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-button>
+          <i data-lucide="menu" aria-hidden="true"></i>
+          <span class="sr-only">Open navigation</span>
+        </button>
+
+        <nav class="primary-nav" id="primary-navigation" aria-label="Primary navigation" data-primary-nav>
+          <a href="../index.html">Home</a>
+          <a href="../about-us/">About Us</a>
+          <div class="nav-dropdown">
+            <div class="nav-dropdown-row">
+              <a href="../services/">Services</a>
+              <button class="dropdown-button" type="button" aria-expanded="false" aria-label="Show services menu" data-dropdown-button>
+                <i data-lucide="chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="dropdown-menu" data-dropdown-menu>
+              <a href="../services/#our-approach">Our Approach</a>
+              <a href="../services/#center-based-aba">Center-Based ABA Therapy</a>
+              <a href="../services/#in-home-aba">In-Home ABA Therapy</a>
+              <a href="../services/#school-collaboration">School Collaboration</a>
+              <a href="../services/#community-integration">Community Integration</a>
+              <a href="../services/#early-intervention">Early Intervention</a>
+              <a href="../services/#autism-diagnosis">Autism Diagnosis</a>
+              <a href="../services/#speech-occupational-therapy">Speech &amp; Occupational Therapy</a>
+            </div>
+          </div>
+          <a href="../insurance/">Insurance</a>
+          <a href="../getting-started/">Getting Started</a>
+          <a href="../resources/">Resources</a>
+          <a href="../careers/">Careers</a>
+          <a href="../contact/" aria-current="page">Contact Us</a>
+          <a class="nav-cta" href="../getting-started/">Get Started</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="section-inner page-hero-grid">
+          <div class="page-hero-copy">
+            <p class="eyebrow">Contact Us</p>
+            <h1>Contact Bloompath</h1>
+            <p class="hero-text">We’re here to help your family take the next step. Whether you have questions about ABA therapy, autism diagnosis, insurance coverage, or service availability, our team will guide you with care and clarity.</p>
+          </div>
+          <div class="page-hero-visual">
+            <img src="../assets/images/parent-child-window.jpg" alt="A caregiver and child sharing a calm moment in a bright family-centered space.">
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section contact-info-section">
+        <div class="section-inner contact-info-grid">
+          <div class="copy-stack">
+            <p class="eyebrow">Contact Information</p>
+            <h2>Contact Information</h2>
+            <p>After submission, our Intake Department will contact you within two business days. If you have any questions, feel free to contact us today by phone.</p>
+            <p>Our intake team can help you understand available services, insurance verification, assessment steps, and what to expect before therapy begins.</p>
+          </div>
+          <div class="contact-card-grid">
+            <a class="contact-card" href="tel:+19092344833">
+              <i data-lucide="phone" aria-hidden="true"></i>
+              <span>Phone</span>
+              <strong>(909) 234-4833</strong>
+            </a>
+            <a class="contact-card" href="mailto:info@bloompathbehavioral.com">
+              <i data-lucide="mail" aria-hidden="true"></i>
+              <span>Email</span>
+              <strong>info@bloompathbehavioral.com</strong>
+            </a>
+            <a class="contact-card" href="tel:+19092344833">
+              <i data-lucide="receipt" aria-hidden="true"></i>
+              <span>Billing phone</span>
+              <strong>(909) 234-4833</strong>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section form-section">
+        <div class="section-inner form-shell">
+          <div class="form-intro">
+            <p class="eyebrow">Contact Form</p>
+            <h2>Send an Inquiry</h2>
+            <p>You do not need to have everything figured out before reaching out. Bloompath will help guide you through the next steps.</p>
+          </div>
+
+          <form class="bloom-form" action="/api/forms/contact" method="post" enctype="multipart/form-data" data-backend-form>
+            <label class="form-trap" aria-hidden="true">
+              <span>Website</span>
+              <input name="Website" tabindex="-1" autocomplete="off" data-honeypot>
+            </label>
+
+            <div class="form-grid">
+              <label class="full-field">
+                <span>Select Your Location</span>
+                <select name="Location" required>
+                  <option value="">Select a location</option>
+                  <option>Bloompath Behavioral Services</option>
+                  <option>Not sure yet</option>
+                </select>
+              </label>
+              <label>
+                <span>Parent/Guardian First Name</span>
+                <input name="Parent/Guardian First Name" autocomplete="given-name" required>
+              </label>
+              <label>
+                <span>Parent/Guardian Last Name</span>
+                <input name="Parent/Guardian Last Name" autocomplete="family-name" required>
+              </label>
+              <label>
+                <span>Client’s First Name</span>
+                <input name="Client First Name" required>
+              </label>
+              <label>
+                <span>Client’s Last Name</span>
+                <input name="Client Last Name" required>
+              </label>
+              <label>
+                <span>Client’s Age</span>
+                <input type="number" min="0" max="21" name="Client Age" required>
+              </label>
+              <label>
+                <span>Phone Number</span>
+                <input type="tel" name="Phone Number" autocomplete="tel" inputmode="tel" pattern="[0-9()+.\s-]{7,20}" title="Please enter a valid phone number." required>
+              </label>
+              <label>
+                <span>Email</span>
+                <input type="email" name="Email" autocomplete="email" required>
+              </label>
+              <label>
+                <span>City</span>
+                <input name="City" autocomplete="address-level2" required>
+              </label>
+              <label>
+                <span>Insurance Provider</span>
+                <input name="Insurance Provider">
+              </label>
+              <label>
+                <span>Preferred Service Setting</span>
+                <select name="Preferred Service Setting">
+                  <option value="">Select a setting</option>
+                  <option>Center-Based Therapy</option>
+                  <option>In-Home Therapy</option>
+                  <option>School Support</option>
+                  <option>Community Support</option>
+                  <option>Not Sure Yet</option>
+                </select>
+              </label>
+              <label>
+                <span>Preferred Contact Time</span>
+                <select name="Preferred Contact Time">
+                  <option value="">Select a time</option>
+                  <option>Morning</option>
+                  <option>Afternoon</option>
+                  <option>Evening</option>
+                  <option>Anytime</option>
+                </select>
+              </label>
+              <label class="full-field">
+                <span>Message / Questions</span>
+                <textarea name="Message / Questions"></textarea>
+              </label>
+            </div>
+
+            <fieldset>
+              <legend>Services Interested In</legend>
+              <label><input type="checkbox" name="Services Interested In" value="ABA Therapy"> <span>ABA Therapy</span></label>
+              <label><input type="checkbox" name="Services Interested In" value="Autism Diagnosis"> <span>Autism Diagnosis</span></label>
+              <label><input type="checkbox" name="Services Interested In" value="Other"> <span>Other</span></label>
+            </fieldset>
+
+            <label class="consent-field">
+              <input type="checkbox" name="SMS Consent" value="Agreed" required>
+              <span>I agree to receive SMS / Text communication from Bloompath regarding my inquiry. Message and data rates may apply. I may opt out at any time.</span>
+            </label>
+
+            <button class="button button-primary" type="submit">
+              Submit
+              <i data-lucide="send" aria-hidden="true"></i>
+            </button>
+
+            <p class="form-success" hidden data-success-message>Thank you for contacting Bloompath. Our Intake Department will contact you within two business days.</p>
+            <p class="form-error" hidden data-error-message>Something went wrong. Please call Bloompath at (909) 234-4833 or email info@bloompathbehavioral.com.</p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-inner footer-grid">
+        <div>
+          <img src="../assets/images/bloompath-logo.png" alt="Bloompath Behavioral Services" class="footer-logo">
+          <p>Bloompath provides compassionate, science-based ABA therapy and developmental support to help children grow with confidence, connection, and independence.</p>
+        </div>
+        <nav aria-label="Footer navigation">
+          <h2>Quick Links</h2>
+          <a href="../index.html">Home</a>
+          <a href="../about-us/">About Us</a>
+          <a href="../services/">Services</a>
+          <a href="../insurance/">Insurance</a>
+          <a href="../getting-started/">Getting Started</a>
+          <a href="../resources/">Resources</a>
+          <a href="../careers/">Careers</a>
+          <a href="../contact/">Contact Us</a>
+        </nav>
+        <div class="footer-contact">
+          <h2>Contact Information</h2>
+          <p><strong>Phone:</strong> <a href="tel:+19092344833">(909) 234-4833</a></p>
+          <p><strong>Email:</strong> <a href="mailto:info@bloompathbehavioral.com">info@bloompathbehavioral.com</a></p>
+          <p><strong>Billing phone:</strong> <a href="tel:+19092344833">(909) 234-4833</a></p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>
