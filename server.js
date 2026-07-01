@@ -333,12 +333,14 @@ async function createTransporter() {
     throw error;
   }
 
-  const smtpEndpoint = await resolveSmtpEndpoint(process.env.SMTP_HOST);
+  const smtpHost = process.env.SMTP_HOST;
+  const useGmailSslSmtp = smtpHost.toLowerCase() === "smtp.gmail.com";
+  const smtpEndpoint = await resolveSmtpEndpoint(smtpHost);
 
   return nodemailer.createTransport({
     host: smtpEndpoint.host,
-    port: Number(process.env.SMTP_PORT || 587),
-    secure: process.env.SMTP_SECURE === "true",
+    port: useGmailSslSmtp ? 465 : Number(process.env.SMTP_PORT || 587),
+    secure: useGmailSslSmtp ? true : process.env.SMTP_SECURE === "true",
     connectionTimeout: 30000,
     greetingTimeout: 30000,
     socketTimeout: 60000,
