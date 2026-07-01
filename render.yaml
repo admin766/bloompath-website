@@ -13,6 +13,12 @@ services:
         value: info@bloompathbehavioral.com
       - key: FORM_DRY_RUN
         value: "false"
+      - key: EMAIL_PROVIDER
+        value: resend
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM
+        value: Bloompath Website <no-reply@bloompathbehavioral.com>
       - key: SMTP_HOST
         sync: false
       - key: SMTP_PORT

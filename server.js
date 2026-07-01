@@ -14,6 +14,7 @@ const app = express();
 const rootDir = __dirname;
 const recipientEmail = process.env.RECIPIENT_EMAIL || "info@bloompathbehavioral.com";
 const dryRun = process.env.FORM_DRY_RUN === "true";
+const emailProvider = (process.env.EMAIL_PROVIDER || (process.env.RESEND_API_KEY ? "resend" : "smtp")).toLowerCase();
 const port = Number(process.env.PORT || 4173);
 const privateStaticPattern = /^\/(?:\.env(?:\.example)?|\.gitignore|README\.md|LAUNCH_CHECKLIST\.md|package(?:-lock)?\.json|server\.js|node_modules(?:\/|$)|outputs(?:\/|$))/i;
 const pageRoutes = [
@@ -112,7 +113,7 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.get("/healthz", (req, res) => {
   res.json({
     ok: true,
-    emailMode: dryRun ? "dry-run" : "smtp"
+    emailMode: dryRun ? "dry-run" : emailProvider
   });
 });
 
@@ -189,7 +190,7 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(port, () => {
-  const mode = dryRun ? "dry-run email mode" : "SMTP email mode";
+  const mode = dryRun ? "dry-run email mode" : `${emailProvider} email mode`;
   console.log(`Bloompath website running at http://localhost:${port} (${mode})`);
 });
 
@@ -301,7 +302,7 @@ async function sendNotification(config, fields, files) {
   const html = buildHtmlEmail(config, fields, files, submittedAt);
   const replyTo = isValidEmail(fields[config.emailField] || "") ? fields[config.emailField] : undefined;
   const mailOptions = {
-    from: process.env.SMTP_FROM || process.env.SMTP_USER,
+    from: process.env.RESEND_FROM || process.env.SMTP_FROM || process.env.SMTP_USER || `Bloompath Website <${recipientEmail}>`,
     to: recipientEmail,
     subject: config.subject,
     replyTo,
@@ -320,8 +321,59 @@ async function sendNotification(config, fields, files) {
     return;
   }
 
-  const transporter = await createTransporter();
-  await transporter.sendMail(mailOptions);
+  if (emailProvider === "resend") {
+    await sendWithResend(mailOptions);
+    return;
+  }
+
+  if (emailProvider === "smtp") {
+    const transporter = await createTransporter();
+    await transporter.sendMail(mailOptions);
+    return;
+  }
+
+  const error = new Error(`Unsupported email provider: ${emailProvider}`);
+  error.statusCode = 503;
+  error.publicMessage = "Email delivery is not configured yet. Please contact Bloompath by phone or email.";
+  throw error;
+}
+
+async function sendWithResend(mailOptions) {
+  if (!process.env.RESEND_API_KEY) {
+    const error = new Error("Missing Resend configuration: RESEND_API_KEY");
+    error.statusCode = 503;
+    error.publicMessage = "Email delivery is not configured yet. Please contact Bloompath by phone or email.";
+    throw error;
+  }
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      from: mailOptions.from,
+      to: [mailOptions.to],
+      subject: mailOptions.subject,
+      html: mailOptions.html,
+      text: mailOptions.text,
+      reply_to: mailOptions.replyTo,
+      attachments: mailOptions.attachments.map((attachment) => ({
+        filename: attachment.filename,
+        content: attachment.content.toString("base64")
+      }))
+    })
+  });
+
+  if (!response.ok) {
+    const responseBody = await response.json().catch(() => ({}));
+    const detail = responseBody.message || responseBody.error?.message || response.statusText;
+    const error = new Error(`Resend email failed: ${detail}`);
+    error.statusCode = 502;
+    error.publicMessage = "Submission failed. Please try again or contact Bloompath directly.";
+    throw error;
+  }
 }
 
 async function createTransporter() {

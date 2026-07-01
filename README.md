@@ -23,18 +23,15 @@ http://localhost:4173/healthz
 
 ## Production Email Setup
 
-Copy `.env.example` to `.env` and configure SMTP:
+Copy `.env.example` to `.env` and configure Resend:
 
 ```sh
 PORT=4173
 RECIPIENT_EMAIL=info@bloompathbehavioral.com
 FORM_DRY_RUN=false
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=your-smtp-username
-SMTP_PASS=your-smtp-password
-SMTP_FROM="Bloompath Website <no-reply@bloompathbehavioral.com>"
+EMAIL_PROVIDER=resend
+RESEND_API_KEY=re_your_resend_api_key
+RESEND_FROM="Bloompath Website <no-reply@bloompathbehavioral.com>"
 ```
 
 All forms send notifications to `RECIPIENT_EMAIL`.
@@ -69,8 +66,8 @@ Limits:
 - 12 MB total
 - 4 files maximum
 
-Files are sent as email attachments through the configured SMTP provider. Final attachment delivery depends on the SMTP/email provider allowing attachments of that size.
+Files are sent as email attachments through the configured email provider. Final attachment delivery depends on the provider allowing attachments of that size.
 
 ## Launch Checklist
 
-See `LAUNCH_CHECKLIST.md` for the final production checklist, required environment variables, SMTP setup steps, and post-deploy form tests.
+See `LAUNCH_CHECKLIST.md` for the final production checklist, required environment variables, Resend setup steps, and post-deploy form tests.

@@ -8,28 +8,28 @@ Set these on the production host before launch:
 PORT=4173
 RECIPIENT_EMAIL=info@bloompathbehavioral.com
 FORM_DRY_RUN=false
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=your-smtp-username
-SMTP_PASS=your-smtp-password
-SMTP_FROM="Bloompath Website <no-reply@bloompathbehavioral.com>"
+EMAIL_PROVIDER=resend
+RESEND_API_KEY=re_your_resend_api_key
+RESEND_FROM="Bloompath Website <no-reply@bloompathbehavioral.com>"
 ```
 
-Use `SMTP_SECURE=true` only when the SMTP provider requires implicit TLS, usually port `465`. Use `SMTP_SECURE=false` for STARTTLS, usually port `587`.
+Render free web services block outbound SMTP ports, so production email should use Resend's HTTPS API instead of SMTP.
 
-## SMTP Setup
+## Resend Email Setup
 
-1. Choose the production email provider for Bloompath.
-2. Create or confirm a sending identity such as `no-reply@bloompathbehavioral.com`.
-3. Generate SMTP credentials for the website.
-4. Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, and `SMTP_FROM` on the production host.
-5. Set `RECIPIENT_EMAIL=info@bloompathbehavioral.com`.
-6. Confirm `FORM_DRY_RUN=false`.
-7. Submit one Contact, Insurance, and Careers test form after deployment.
-8. Confirm all three messages arrive at `info@bloompathbehavioral.com`.
-9. Confirm the Careers test includes a resume attachment.
-10. Confirm replies go to the submitted user email address.
+1. Create a Resend account.
+2. Add and verify `bloompathbehavioral.com` in Resend.
+3. Add Resend's required DNS records in Squarespace DNS.
+4. Create a Resend API key.
+5. Set `EMAIL_PROVIDER=resend`.
+6. Set `RESEND_API_KEY` on Render.
+7. Set `RESEND_FROM=Bloompath Website <no-reply@bloompathbehavioral.com>`.
+8. Set `RECIPIENT_EMAIL=info@bloompathbehavioral.com`.
+9. Confirm `FORM_DRY_RUN=false`.
+10. Submit one Contact, Insurance, and Careers test form after deployment.
+11. Confirm all three messages arrive at `info@bloompathbehavioral.com`.
+12. Confirm the Careers test includes a resume attachment.
+13. Confirm replies go to the submitted user email address.
 
 ## Build And Start
 
