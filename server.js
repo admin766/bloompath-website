@@ -1,4 +1,6 @@
 const path = require("path");
+const dns = require("dns").promises;
+const net = require("net");
 
 require("dotenv").config();
 
@@ -318,11 +320,11 @@ async function sendNotification(config, fields, files) {
     return;
   }
 
-  const transporter = createTransporter();
+  const transporter = await createTransporter();
   await transporter.sendMail(mailOptions);
 }
 
-function createTransporter() {
+async function createTransporter() {
   const missingConfig = ["SMTP_HOST", "SMTP_USER", "SMTP_PASS"].filter((key) => !process.env[key]);
   if (missingConfig.length) {
     const error = new Error(`Missing SMTP configuration: ${missingConfig.join(", ")}`);
@@ -331,19 +333,40 @@ function createTransporter() {
     throw error;
   }
 
+  const smtpEndpoint = await resolveSmtpEndpoint(process.env.SMTP_HOST);
+
   return nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
+    host: smtpEndpoint.host,
     port: Number(process.env.SMTP_PORT || 587),
     secure: process.env.SMTP_SECURE === "true",
-    family: 4,
     connectionTimeout: 30000,
     greetingTimeout: 30000,
     socketTimeout: 60000,
+    tls: smtpEndpoint.servername ? { servername: smtpEndpoint.servername } : undefined,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS
     }
   });
+}
+
+async function resolveSmtpEndpoint(host) {
+  if (process.env.SMTP_FORCE_IPV4 === "false" || net.isIP(host)) {
+    return {
+      host,
+      servername: process.env.SMTP_SERVERNAME || (net.isIP(host) ? undefined : host)
+    };
+  }
+
+  const addresses = await dns.resolve4(host);
+  if (!addresses.length) {
+    return { host, servername: host };
+  }
+
+  return {
+    host: addresses[0],
+    servername: host
+  };
 }
 
 function buildTextEmail(config, fields, files, submittedAt) {
