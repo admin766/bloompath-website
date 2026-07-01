@@ -335,6 +335,10 @@ function createTransporter() {
     host: process.env.SMTP_HOST,
     port: Number(process.env.SMTP_PORT || 587),
     secure: process.env.SMTP_SECURE === "true",
+    family: 4,
+    connectionTimeout: 30000,
+    greetingTimeout: 30000,
+    socketTimeout: 60000,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS
