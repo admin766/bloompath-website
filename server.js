@@ -14,6 +14,16 @@ const recipientEmail = process.env.RECIPIENT_EMAIL || "info@bloompathbehavioral.
 const dryRun = process.env.FORM_DRY_RUN === "true";
 const port = Number(process.env.PORT || 4173);
 const privateStaticPattern = /^\/(?:\.env(?:\.example)?|\.gitignore|README\.md|LAUNCH_CHECKLIST\.md|package(?:-lock)?\.json|server\.js|node_modules(?:\/|$)|outputs(?:\/|$))/i;
+const pageRoutes = [
+  { routes: ["/", "/index.html"], file: "index.html" },
+  { routes: ["/about-us", "/about-us/", "/about-us/index.html"], file: "about-us/index.html" },
+  { routes: ["/services", "/services/", "/services/index.html"], file: "services/index.html" },
+  { routes: ["/insurance", "/insurance/", "/insurance/index.html"], file: "insurance/index.html" },
+  { routes: ["/getting-started", "/getting-started/", "/getting-started/index.html"], file: "getting-started/index.html" },
+  { routes: ["/resources", "/resources/", "/resources/index.html"], file: "resources/index.html" },
+  { routes: ["/careers", "/careers/", "/careers/index.html"], file: "careers/index.html" },
+  { routes: ["/contact", "/contact/", "/contact/index.html"], file: "contact/index.html" }
+];
 
 const formConfigs = {
   contact: {
@@ -117,6 +127,12 @@ app.use((req, res, next) => {
   }
 
   return next();
+});
+
+pageRoutes.forEach(({ routes, file }) => {
+  app.get(routes, (req, res) => {
+    res.sendFile(path.join(rootDir, file));
+  });
 });
 
 app.use(express.static(rootDir, { extensions: ["html"] }));
